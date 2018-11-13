@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const planetsData = __webpack_require__(/*! ./data/planets.js */ \"./src/data/planets.js\");\nconst SolarSystem = __webpack_require__(/*! ./models/solar_system.js */ \"./src/models/solar_system.js\");\nconst PlanetInfo = __webpack_require__(/*! ./views/planet_info_view.js */ \"./src/views/planet_info_view.js\");\nconst MenuView = __webpack_require__(/*! ./views/menu_view.js */ \"./src/views/menu_view.js\");\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  const planetsDataModel = new SolarSystem(planetsData);\n  console.log(planetsDataModel.planets);\n});\n\n\n//# sourceURL=webpack:///./src/app.js?");
+eval("const planetsData = __webpack_require__(/*! ./data/planets.js */ \"./src/data/planets.js\");\nconst SolarSystem = __webpack_require__(/*! ./models/solar_system.js */ \"./src/models/solar_system.js\");\nconst PlanetInfo = __webpack_require__(/*! ./views/planet_info_view.js */ \"./src/views/planet_info_view.js\");\nconst MenuView = __webpack_require__(/*! ./views/menu_view.js */ \"./src/views/menu_view.js\");\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  const planetsDataModel = new SolarSystem(planetsData);\n  planetsDataModel.bindEvents();\n  console.log(planetsDataModel.planets);\n\n  const planetArrayFromHTML = document.querySelectorAll('.planet-menu-item');\n  const menuView = new MenuView(planetArrayFromHTML);\n  menuView.bindEvents();\n\n});\n\n\n//# sourceURL=webpack:///./src/app.js?");
 
 /***/ }),
 
@@ -126,7 +126,7 @@ eval("const PubSub = {\n  publish: function(channel, payload){\n    const event 
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\n\nconst SolarSystem = function(planets) {\n  this.planets = planets;\n};\n\nmodule.exports = SolarSystem;\n\n\n//# sourceURL=webpack:///./src/models/solar_system.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst planetData = __webpack_require__(/*! ../data/planets.js */ \"./src/data/planets.js\");\n\n\nconst SolarSystem = function(planets) {\n  this.planets = planets;\n};\n\nSolarSystem.prototype.bindEvents = function () {\n  PubSub.subscribe('MenuView:planet-name', (event) => {\n    const planetName = event.detail;\n    console.log('planets', planetData);\n  });\n};\n\n\n\n\n\n\n\n\n\n\nmodule.exports = SolarSystem;\n\n\n//# sourceURL=webpack:///./src/models/solar_system.js?");
 
 /***/ }),
 
@@ -137,7 +137,7 @@ eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/he
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmodule.exports = MenuView;\n\n\n//# sourceURL=webpack:///./src/views/menu_view.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\n\nconst MenuView = function(planetArray) {\n  this.planetArray = planetArray;\n};\n\n// MenuView.prototype.bindEvents = function () {\n//   PubSub.subscribe('solarSystem:AllPlanetsReady', (event) =>{\n//      const allPlanets = event.detail;\n//      for (planet of allPlanets) {\n//        planet.addEventListener()\n//\n//      }\n//   })\n// };\n\n// const infoDiv = document.querySelector(‘div#animal-info’)\n//  const animalInfoDisplay = new AnimalInfoView(infoDiv);\n//  animalInfoDisplay.bindEvents();\n\nMenuView.prototype.bindEvents = function () {\n  for (planet of this.planetArray) {\n    planet.addEventListener(\"click\", (event) => {\n      console.log(event);\n      const planetName = event.target.textContent;\n      console.log(\"event.target.textContent = \", event.target.textContent);\n      PubSub.publish('MenuView:planet-name', planetName);\n    });\n  };\n};\n\nmodule.exports = MenuView;\n\n\n//# sourceURL=webpack:///./src/views/menu_view.js?");
 
 /***/ }),
 
@@ -148,7 +148,7 @@ eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/he
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmodule.exports = PlanetInfo;\n\n\n//# sourceURL=webpack:///./src/views/planet_info_view.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\n\nconst PlanetInfo = function() {\n  this.planetInfo = planetInfo;\n};\n\n\n\n\n\n\n\n\n\n\n\n\n\nmodule.exports = PlanetInfo;\n\n\n//# sourceURL=webpack:///./src/views/planet_info_view.js?");
 
 /***/ })
 
