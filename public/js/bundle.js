@@ -126,7 +126,7 @@ eval("const PubSub = {\n  publish: function(channel, payload){\n    const event 
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst planetData = __webpack_require__(/*! ../data/planets.js */ \"./src/data/planets.js\");\n\n\nconst SolarSystem = function(planets) {\n  this.planets = planets;\n};\n\nSolarSystem.prototype.bindEvents = function () {\n  PubSub.subscribe('MenuView:planet-name', (event) => {\n    const planetName = event.detail;\n    console.log('planets', planetData);\n  });\n};\n\n\n\n\n\n\n\n\n\n\nmodule.exports = SolarSystem;\n\n\n//# sourceURL=webpack:///./src/models/solar_system.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst planetData = __webpack_require__(/*! ../data/planets.js */ \"./src/data/planets.js\");\n\n\nconst SolarSystem = function(planets) {\n  this.planets = planets;\n};\n\nSolarSystem.prototype.bindEvents = function () {\n  PubSub.subscribe('MenuView:planet-name', (event) => {\n    const planetName = event.detail;\n    console.log('planets', planetData);\n    const foundPlanet = planetData.find((planet) => {\n      return planet.name === planetName;\n    });\n    console.log(foundPlanet);\n  });\n};\n\n\n\n\n\n\n\n\n\n\nmodule.exports = SolarSystem;\n\n\n//# sourceURL=webpack:///./src/models/solar_system.js?");
 
 /***/ }),
 

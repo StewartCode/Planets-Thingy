@@ -10,6 +10,10 @@ SolarSystem.prototype.bindEvents = function () {
   PubSub.subscribe('MenuView:planet-name', (event) => {
     const planetName = event.detail;
     console.log('planets', planetData);
+    const foundPlanet = planetData.find((planet) => {
+      return planet.name === planetName;
+    });
+    console.log(foundPlanet);
   });
 };
 
